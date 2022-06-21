@@ -1,3 +1,5 @@
+## Edit streamlit text
+
 import streamlit
 
 streamlit.title('My Mom\'s New Healthy Corner')
@@ -11,8 +13,14 @@ streamlit.text('🥑🍞 Avocado Toast')
 
 streamlit.header('🍌🥭 Build Your Own Fruit Smoothie 🥝🍇')
 
+## Import table using pandas
+
 import pandas
 
 my_fruit_list = pandas.read_csv("https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt")
 
+# Let's put a pick list so they can pick the fruit they want
+streamlit.multiselect("Pick some fruits:", list(my_fruit_list.index))
+
+# Display the table on page
 streamlit.dataframe(my_fruit_list)
