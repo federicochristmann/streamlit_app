@@ -50,13 +50,15 @@ fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
 # Display the table on page
 streamlit.dataframe(fruityvice_normalized)
 
+# Don't run anything past here while we troubleshoot
+streamlit.stop
 
 ## Add Snowflake
 
 # Import the Snowflake connector package
 import snowflake.connector
 
-# Query our Snowflake trial account metadata
+# Query our Snowflake fruit data from Rivery
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
 my_cur.execute("SELECT * FROM FRUIT_LOAD_LIST")
@@ -65,9 +67,9 @@ my_data_rows = my_cur.fetchall() #or ".fetchone" for the first element
 streamlit.header("The fruit load list contains:")
 streamlit.dataframe(my_data_rows)
 
-# Set a fruit imput variable (used in the following API call)
+# Set a fruit imput variable
 add_my_fruit = streamlit.text_input('What fruit would you like to add?','Jackfruit')
 streamlit.write('Thanks for adding ', add_my_fruit)
 
-#
+# Insert new fruits in the table
 my_cur.execute("INSERT INTO FRUIT_LOAD_LIST VALUES ('from Streamlit')")
