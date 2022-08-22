@@ -64,3 +64,6 @@ my_data_rows = my_cur.fetchall() #or ".fetchone"
 
 streamlit.header("The fruit load list contains:")
 streamlit.dataframe(my_data_rows)
+
+# Set a fruit imput variable (used in the following API call)
+add_my_fruit = streamlit.text_input('What fruit would you like to add?','Jackfruit')
