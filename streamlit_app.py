@@ -59,8 +59,7 @@ import snowflake.connector
 # Query our Snowflake trial account metadata
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
-my_cur.execute("SELECT * FROM FRUIT_LOAD_LIST")
-#INSERT INTO FRUIT_LOAD_LIST VALUES ('from Streamlit')
+my_cur.execute("INSERT INTO FRUIT_LOAD_LIST VALUES ('from Streamlit')")
 my_data_rows = my_cur.fetchall() #or ".fetchone" for the first element
 
 streamlit.header("The fruit load list contains:")
