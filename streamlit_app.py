@@ -1,6 +1,13 @@
+# Import resources
+import streamlit
+import pandas
+import requests
+import snowflake.connector
+from urllib.error import URLError
+
 ## Edit streamlit text
 
-import streamlit
+#import streamlit
 
 streamlit.title('My Mom\'s New Healthy Corner')
 
@@ -16,7 +23,7 @@ streamlit.header('🍌🥭 Build Your Own Fruit Smoothie 🥝🍇')
 
 ## Import table using pandas
 
-import pandas
+#import pandas
 
 my_fruit_list = pandas.read_csv("https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt")
 
@@ -39,7 +46,7 @@ streamlit.header('Fruityvice Fruit Advice!')
 fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
 streamlit.write('The user entered ', fruit_choice)
 
-import requests
+#import requests
 
 # API call
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
@@ -56,7 +63,7 @@ streamlit.stop()
 ## Add Snowflake
 
 # Import the Snowflake connector package
-import snowflake.connector
+#import snowflake.connector
 
 # Query our Snowflake fruit data from Rivery
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
