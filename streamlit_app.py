@@ -59,7 +59,7 @@ import snowflake.connector
 # Query our Snowflake trial account metadata
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
-my_cur.execute("INSERT INTO FRUIT_LOAD_LIST VALUES ('from Streamlit')")
+my_cur.execute("SELECT * FROM FRUIT_LOAD_LIST")
 my_data_rows = my_cur.fetchall() #or ".fetchone" for the first element
 
 streamlit.header("The fruit load list contains:")
@@ -68,3 +68,6 @@ streamlit.dataframe(my_data_rows)
 # Set a fruit imput variable (used in the following API call)
 add_my_fruit = streamlit.text_input('What fruit would you like to add?','Jackfruit')
 streamlit.write('Thanks for adding ', add_my_fruit)
+
+#
+my_cur.execute("INSERT INTO FRUIT_LOAD_LIST VALUES ('from Streamlit')")
