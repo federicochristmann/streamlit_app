@@ -42,20 +42,25 @@ streamlit.dataframe(fruits_to_show)
 
 #import requests
 
-streamlit.header('Fruityvice Fruit Advice!')
+# Create the repeatable code block (function)
+def get_fruityvice_data(this_fruit_choice):
+# API call
+    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + this_fruit_choice)    
+# Take de .json version of the response and normalize it
+    fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+return fruityvice_normalized
 
+# Display API response
+streamlit.header('Fruityvice Fruit Advice!')
 try:
-# Set a fruit imput variable (used in the following API call)
+# Set a fruit imput variable
   fruit_choice = streamlit.text_input('What fruit would you like information about?')
   if not fruit_choice:
     streamlit.error("Please select a fruit to get information.")
   else: 
-# API call
-    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)    
-# Take de .json version of the response and normalize it
-    fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+    back_from_function = get_fruityvice_data(fruit_choice)
 # Display the table on page
-    streamlit.dataframe(fruityvice_normalized)
+    streamlit.dataframe(back_from_function)
   
 except URLError as e:
   streamlit.error()
