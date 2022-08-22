@@ -70,17 +70,23 @@ streamlit.stop()
 
 ## Add Snowflake
 
-# Import the Snowflake connector package
 #import snowflake.connector
 
-# Query our Snowflake fruit data from Rivery
-my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-my_cur = my_cnx.cursor()
-my_cur.execute("SELECT * FROM FRUIT_LOAD_LIST")
-my_data_rows = my_cur.fetchall() #or ".fetchone" for the first element
-
 streamlit.header("The fruit load list contains:")
-streamlit.dataframe(my_data_rows)
+
+# Add a function to query the table
+def get_fruit_load_list():
+    with my_cnx.cursor() as my_cur:
+# Query our Snowflake fruit data from Rivery
+        my_cur.execute("SELECT * FROM FRUIT_LOAD_LIST")
+        return my_cur.fetchall() #or ".fetchone" for the first element
+    
+# Add a button to load the fruit
+if streamlit.button('Get fruit load list'):
+    my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+    my_data_rows = get_fruit_load_list()
+# Display the table on page
+    streamlit.dataframe(my_data_rows)
 
 # Set a fruit imput variable
 add_my_fruit = streamlit.text_input('What fruit would you like to add?','Jackfruit')
